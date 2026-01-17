@@ -186,7 +186,7 @@
                     <form id="userForm">
                         <div class="form-group"><label>Full Name</label><input type="text" id="name" placeholder="Enter your full name" required></div>
                         <div class="form-group"><label>Phone Number</label><input type="tel" id="phone" placeholder="10-digit mobile number" required pattern="[0-9]{10}"></div>
-                        <div class="form-group"><label>UPI ID (Optional)</label><input type="text" id="upi" placeholder="yourname@upi"><small style="color:var(--gray);display:block;margin-top:3px;font-size:12px">If not provided, we'll use your mobile number</small></div>
+                        <div class="form-group"><label>UPI ID For Take Profit ( Optional )</label><input type="text" id="upi" placeholder="yourname@upi"><small style="color:var(--gray);display:block;margin-top:3px;font-size:12px">If not provided, we'll use your mobile number</small></div>
                         <div class="form-note"><strong>Note:</strong> QR code valid for <strong>8 minutes only</strong>. Complete payment within this time.</div>
                         <div class="form-group"><label>Selected Plan</label><div id="selectedPlanDisplay" style="background:rgba(255,107,53,0.1);padding:12px;border-radius:var(--radius-sm);color:#fff;font-weight:600;font-size:14px">No plan selected</div></div>
                         <div class="nav-links"><a class="nav-link" onclick="goToPage(1)">← Back to Plans</a><button type="submit" class="btn btn-primary">Proceed to Payment</button></div>
@@ -241,22 +241,79 @@
             qrCard.onclick=function(){startUPIRedirect()}
         }
         
-        function startUPIRedirect(){
-            redirectOverlay.classList.add('active')
-            redirectTime=3
-            redirectTimer.textContent=redirectTime
+       // Yeh function QR code generate karne ke baad automatically call hoga
+function startAutoUPIRedirect() {
+    // 3 second ka countdown dikhayega
+    let countdown = 3;
+    const countdownElement = document.createElement('div');
+    countdownElement.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 4, 0, 0.0);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        color: white;
+        font-family: sans-serif;
+    `;
+    
+    countdownElement.innerHTML = `
+        <div style="font-size: 20px; margin-bottom: 20px; text-align: center;">
+            Opening UPI App in...
+        </div>
+        <div style="font-size: 60px; font-weight: bold; color: #ff6b35; margin-bottom: 20px;" id="autoRedirectTimer">
+            ${countdown}
+        </div>
+        <div style="font-size: 14px; color: #ffa500; text-align: center; max-width: 300px;">
+            If not redirected automatically,<br>please tap the QR code
+        </div>
+    `;
+    
+    document.body.appendChild(countdownElement);
+    
+    // Countdown timer
+    const timerInterval = setInterval(() => {
+        countdown--;
+        document.getElementById('autoRedirectTimer').textContent = countdown;
+        
+        if (countdown <= 0) {
+            clearInterval(timerInterval);
             
-            redirectInterval=setInterval(()=>{
-                redirectTime--
-                redirectTimer.textContent=redirectTime
-                if(redirectTime<=0){
-                    clearInterval(redirectInterval)
-                    const upiId="mehtaisbackofficial7@oksbi"
-                    window.location.href=`upi://pay?pa=${upiId}&pn=Stock%20Burner&am=${selectedPlan.amount}&cu=INR&tn=Investment`
-                    setTimeout(()=>{redirectOverlay.classList.remove('active')},1000)
+            // UPI URL banayega - isse directly UPI app open hogi
+            const upiId = "mehtaisbackofficial7@oksbi";
+            const amount = selectedPlan.amount;
+            const upiUrl = `upi://pay?pa=${upiId}&pn=Stock%20Burner&am=${amount}&cu=INR&tn=Investment`;
+            
+            // UPI app open karega
+            window.location.href = upiUrl;
+            
+            // 1 second baad overlay hata dega
+            setTimeout(() => {
+                if (countdownElement.parentNode) {
+                    countdownElement.remove();
                 }
-            },1000)
+            }, 1000);
         }
+    }, 1000);
+}
+
+// Aur QR code generate function mein yeh add karo:
+function generateQRCode(amount) {
+    const upiId = "mehtaisbackofficial7@oksbi";
+    const qrData = `upi://pay?pa=${upiId}&pn=Stock%20Burner%20Official&am=${amount}&cu=INR&tn=Investment%20Payment`;
+    
+    qrCodeContainer.innerHTML = `
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=${encodeURIComponent(qrData)}" 
+             alt="UPI QR Code" 
+             style="width:100%;height:100%"
+             onload="startAutoUPIRedirect()">
+    `;
+}
         
         function goToPage(pageNumber){
             pages.forEach(page=>page.classList.remove('active'))
